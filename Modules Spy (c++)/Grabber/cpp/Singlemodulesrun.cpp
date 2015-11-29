@@ -1,5 +1,7 @@
 #include "Singlemodulesrun.h"
 
+pthread_t HI, SC, SI, NI, ES, SP;
+
 void *HI_proc(void *param);
 void *SC_proc(void *param);
 void *SI_proc(void *param);
@@ -7,9 +9,19 @@ void *NI_proc(void *param);
 void *ES_proc(void *param);
 void *SP_proc(void *param);
 
+void KillModules(void)
+{
+	pthread_cancel(HI);
+	pthread_cancel(SC);
+	pthread_cancel(SI);
+	pthread_cancel(NI);
+	pthread_cancel(ES);
+	pthread_cancel(SP);
+}
+
 void SingleModulesRun(control *C)
 {
-	pthread_t HI, SC, SI, NI, ES, SP;
+	//pthread_t HI, SC, SI, NI, ES, SP;
 
 	pthread_create(&HI, NULL, HI_proc, (void*)C);
 	pthread_create(&SC, NULL, SC_proc, (void*)C);

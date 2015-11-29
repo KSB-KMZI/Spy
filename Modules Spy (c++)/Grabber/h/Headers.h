@@ -11,9 +11,6 @@
 #pragma comment (lib, "mswsock.lib")
 using namespace std;
 
-#define PORT 65000 
-#define SERVERADDR "127.0.0.1" 
-
 struct control
 {
 	unsigned int period[6];

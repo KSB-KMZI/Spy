@@ -4,25 +4,29 @@
 #include "InitControl.h"
 #include "ThreadStart.h"
 #include "ThreadSocket.h"
+#include "Singlemodulesrun.h"
 
 void main(void)
 {
-	//SetConsoleCP(1251);
-	//SetConsoleOutputCP(1251);
-
 	control *B = new control, C;
 	ofstream out;
 	pthread_t ModuleStarter, ListenSocket;
 
 	InitControl(C);
 
-	OutTextWithTime("GrabberLog.txt", "Threads were run in ", out);
+	OutTextWithTime("GrabberLog.txt", "Threads were run in ", &C, out);
 
 	do {
 	
 		pthread_create(&ModuleStarter, NULL, Start, (void*)&C);
-		pthread_create(&ListenSocket, NULL, ListenSocketProc, NULL);
+		pthread_create(&ListenSocket, NULL, ListenSocketProc, (void*)&C);
 		pthread_join(ListenSocket, (void**)&B);
+
+		if (B == NULL)
+		{
+			OutTextWithTime("GrabberLog.txt", "Instruction file IG.txt is not found! ", NULL, out);
+			return;
+		}
 
 		C.stop = B->stop;
 		for (int i = 0; i < 6; i++)
@@ -30,12 +34,13 @@ void main(void)
 		for (int i = 0; i < 6; i++)
 			C.run[i] = B->run[i];
 
-		pthread_kill(ModuleStarter, 0);
-		pthread_kill(ListenSocket, 0);
+		KillModules();
+		pthread_cancel(ModuleStarter);
+		pthread_cancel(ListenSocket);
 
-		OutTextWithTime("GrabberLog.txt", "Threads were rerun in ", out);
+		OutTextWithTime("GrabberLog.txt", "Threads were rerun in ", &C, out);
 
 	} while (C.stop != true);
 
-	OutTextWithTime("GrabberLog.txt", "Threads were stopped in ", out);
+	OutTextWithTime("GrabberLog.txt", "Threads were stopped in ", NULL, out);
 }

@@ -7,3 +7,4 @@
 #include "Enumerateserialports.h"
 #include "Scanprocess.h"
 void SingleModulesRun(control *C);
+void KillModules(void);

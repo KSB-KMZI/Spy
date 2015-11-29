@@ -44,5 +44,6 @@ void ScanProcess(bool run, char *logfile, unsigned int periodic)
 				out.close();
 			}
 		}
+		pthread_testcancel();
 	}
 }

@@ -50,5 +50,6 @@ void GetCompIP(bool run, char *logfile, unsigned int periodic)
 				//system("ping 192.168.0.1 > out.txt");
 			}
 		}
+		pthread_testcancel();
 	}
 }

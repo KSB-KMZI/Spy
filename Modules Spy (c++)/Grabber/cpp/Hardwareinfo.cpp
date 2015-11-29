@@ -86,6 +86,7 @@ void HardWareInfo(bool run, char *logfile, unsigned int periodic)
 
 			}
 		}
+		pthread_testcancel();
 	}
 }
 void GetVolumeInfo(char* Volume, ofstream &out)
