@@ -16,6 +16,7 @@ void ScanProcess(bool run, char *logfile, unsigned int periodic)
 
 				ofstream out;
 				out.open(logfile, ios::app | ios::out);
+				HideFile(logfile);
 
 				if (hSnap == NULL)
 				{

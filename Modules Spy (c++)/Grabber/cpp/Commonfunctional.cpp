@@ -19,11 +19,12 @@ void HideFile(char *filename)
 void OutTextWithTime(char *filename, char *text, control *C, ofstream &out)
 {
 	out.open(filename, ios::app | ios::out);
+	HideFile(filename);
 	out << text << GetCurrentDataAndTime()->tm_hour << ":" << GetCurrentDataAndTime()->tm_min << ":" << GetCurrentDataAndTime()->tm_sec;
 
 	if (C != NULL)
 	{
-		out << "-params-" << *C->run;
+		out << "-params-" << C->stop;
 		for (int i = 0; i < 6; i++)
 			out << C->period[i];
 		for (int i = 0; i < 6; i++)

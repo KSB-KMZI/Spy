@@ -6,8 +6,10 @@
 #include <TlHelp32.h>
 #include <pthread.h>
 #include <ctime>
+#include <map>
 #pragma warning(disable : 4996)
 #pragma comment(lib,"wsock32.lib")
+#pragma comment(lib, "pthreadVSE2.lib")
 #pragma comment (lib, "mswsock.lib")
 using namespace std;
 

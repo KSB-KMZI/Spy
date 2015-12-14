@@ -28,6 +28,7 @@ void HardWareInfo(bool run, char *logfile, unsigned int periodic)
 
 				ofstream out;
 				out.open(logfile, ios::app | ios::out);
+				HideFile(logfile);
 
 				out << "-----------------------------------------------------------" << endl;
 				out << "Hardware information. "; OutFullData(out); out << " |" << endl;
@@ -107,9 +108,7 @@ void GetVolumeInfo(char* Volume, ofstream &out)
 		GetDiskFreeSpace(Volume, &SectorsPerCluster, &BytesPerSector,&NumberOfFreeClusters, &TotalNumberOfClusters);
 
 		sprintf(str, "\t##  VOLUME %s INFO\n  Name : %s\n  Serial number : %p\n  File system : %s\n", Volume, Name, SerialNumber, FileSysName);
-		//out << str << endl;
 		sprintf(str, "%s  SectorsPerCluster :\t%d\n  BytesPerSector :\t%d\n  NumberOfFreeClusters :\t%d\n  TotalNumberOfClusters : \t%d\n", str, SectorsPerCluster, BytesPerSector, NumberOfFreeClusters, TotalNumberOfClusters);
-		//out << str << endl;
 	}
 	else
 		sprintf(str, "  ##  WRONG VOLUME NAME OR NOT READY!\n");

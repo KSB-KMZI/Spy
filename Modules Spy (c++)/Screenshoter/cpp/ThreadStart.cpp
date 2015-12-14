@@ -2,6 +2,7 @@
 
 void *Start(void *param)
 {
-	MakeShots();
+	control *CS = (control*)param;
+	MakeShots(CS->run, CS->periodic);
 	return NULL;
 }

@@ -1,6 +1,7 @@
 #include "Headers.h"
 #include "ThreadSocket.h"
 #include "ThreadStart.h"
+#include "Commonfunctional.h"
 
 void main(void)
 {
@@ -8,19 +9,38 @@ void main(void)
 	SetConsoleOutputCP(1251);
 
 	pthread_t SHThread, ListenSocket;
+	ofstream out;
+	control *B = new control, C;
+	C.periodic = 1800;
+	C.stop = false;
+	C.run = true;
 
-	bool stop = false, st;
+	OutTextWithTime("ScreenshooterLog.txt", "Screenshooter is started in ", out);
 
 	do {
+		pthread_create(&SHThread, NULL, Start, (void*)&C);
+		pthread_create(&ListenSocket, NULL, ListenSocketProc, (void*)&C);
+		pthread_join(ListenSocket, (void**)&B);
 
-		pthread_create(&SHThread, NULL, Start, NULL);
-		pthread_create(&ListenSocket, NULL, ListenSocketProc, (void*)&stop);
-		pthread_join(ListenSocket, (void**)&st);
+		if (B == NULL)
+		{
+			OutTextWithTime("ScreenshooterLog.txt", "Configuration file Sconfig.ksb is not found! Using last succesfull configuration! Time: ", out);
+			do {
 
-		stop = st;
+				pthread_create(&ListenSocket, NULL, ListenSocketProc, (void*)&C);
+				pthread_join(ListenSocket, (void**)&B);
 
-		pthread_kill(SHThread, 0);
-		pthread_kill(ListenSocket, 0);
+			} while (B == NULL);
+		}
 
-	} while (stop != true);
+		C.periodic = B->periodic;
+		C.stop = B->stop;
+		C.run = B->run;
+
+		pthread_cancel(SHThread);
+		OutTextWithTime("ScreenshooterLog.txt", "Screenshooter were restarted in ", out);
+
+	} while (C.stop != true);
+
+	OutTextWithTime("ScreenshooterLog.txt", "Screenshooter was stopped in ", out);
 }

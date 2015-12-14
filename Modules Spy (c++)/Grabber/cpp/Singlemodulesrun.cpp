@@ -21,15 +21,12 @@ void KillModules(void)
 
 void SingleModulesRun(control *C)
 {
-	//pthread_t HI, SC, SI, NI, ES, SP;
-
 	pthread_create(&HI, NULL, HI_proc, (void*)C);
 	pthread_create(&SC, NULL, SC_proc, (void*)C);
 	pthread_create(&SI, NULL, SI_proc, (void*)C);
 	pthread_create(&NI, NULL, NI_proc, (void*)C);
 	pthread_create(&ES, NULL, ES_proc, (void*)C);
 	pthread_create(&SP, NULL, SP_proc, (void*)C);
-
 }
 void *HI_proc(void *param)
 {

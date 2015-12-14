@@ -10,13 +10,13 @@ void *ListenSocketProc(void *param)
 
 	do {
 
-		fp = fopen("IG.txt", "r");
+		fp = fopen("Gconfig.ksb", "r");
 		if (fp == NULL)
 			return NULL;
 		else
 			fclose(fp);
 
-		ifst.open("IG.txt", ios::in);
+		ifst.open("Gconfig.ksb", ios::in);
 
 		ifst >> A->stop;
 		for (int i = 0; i < 6; i++)

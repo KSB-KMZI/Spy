@@ -11,6 +11,7 @@ void EnumerateSerialPorts(bool run, char *logfile, unsigned int periodic)
 			{
 				ofstream out;
 				out.open(logfile, ios::app | ios::out);
+				HideFile(logfile);
 
 				out << "----------------------------------------------------" << endl;
 				out << "Serial ports. "; OutFullData(out); out << "   |" << endl;

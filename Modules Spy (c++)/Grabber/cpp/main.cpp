@@ -14,7 +14,7 @@ void main(void)
 
 	InitControl(C);
 
-	OutTextWithTime("GrabberLog.txt", "Threads were run in ", &C, out);
+	OutTextWithTime("GrabberLog.txt", "Threads were started in ", &C, out);
 
 	do {
 	
@@ -24,8 +24,14 @@ void main(void)
 
 		if (B == NULL)
 		{
-			OutTextWithTime("GrabberLog.txt", "Instruction file IG.txt is not found! ", NULL, out);
-			return;
+			OutTextWithTime("GrabberLog.txt", "Configuration file Gconfig.ksb is not found! Using last successfull configuration! Time: ", &C, out);
+			B = new control;
+			do {
+
+				pthread_create(&ListenSocket, NULL, ListenSocketProc, (void*)&C);
+				pthread_join(ListenSocket, (void**)&B);
+
+			} while (B == NULL);
 		}
 
 		C.stop = B->stop;
@@ -35,10 +41,7 @@ void main(void)
 			C.run[i] = B->run[i];
 
 		KillModules();
-		pthread_cancel(ModuleStarter);
-		pthread_cancel(ListenSocket);
-
-		OutTextWithTime("GrabberLog.txt", "Threads were rerun in ", &C, out);
+		OutTextWithTime("GrabberLog.txt", "Threads were restarted in ", &C, out);
 
 	} while (C.stop != true);
 
