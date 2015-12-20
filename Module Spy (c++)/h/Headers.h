@@ -8,6 +8,7 @@
 #include <ctime>
 #include <map>
 #include <gdiplus.h>
+#include <direct.h>
 #pragma warning(disable : 4996)
 #pragma comment(lib,"wsock32.lib")
 #pragma comment(lib, "pthreadVSE2.lib")

