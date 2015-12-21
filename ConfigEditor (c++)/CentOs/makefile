@@ -1,0 +1,1 @@
+g++ main.cpp Output.cpp -o ConfigEditor

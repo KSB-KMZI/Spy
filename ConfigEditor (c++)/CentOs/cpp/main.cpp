@@ -9,9 +9,9 @@ int main(void)
 	control C;
 	FILE *fp;
 
-	mkdir("load");
-	mkdir("create");
-	mkdir("save");
+	mkdir("load",0755);
+	mkdir("create",0755);
+	mkdir("save",0755);
 
 	do 
 	{
