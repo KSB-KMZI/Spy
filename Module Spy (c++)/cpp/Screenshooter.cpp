@@ -14,17 +14,20 @@ void MakeShots(bool run, int periodic)
 			{
 				string name;
 				string::iterator it;
+				HBITMAP hBitmap;
 
 				GdiplusStartupInput gdiplusStartupInput;
 				ULONG_PTR gdiplusToken;
-				GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
 				HDC scrdc, memdc;
 				HBITMAP membit;
+				int Height, Width;
 
+				StopWhileTransmit();
+
+				GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 				scrdc = GetDC(0);
 
-				int Height, Width;
 				Height = GetSystemMetrics(SM_CYSCREEN);
 				Width = GetSystemMetrics(SM_CXSCREEN);
 
@@ -33,7 +36,6 @@ void MakeShots(bool run, int periodic)
 				SelectObject(memdc, membit);
 
 				BitBlt(memdc, 0, 0, Width, Height, scrdc, 0, 0, SRCCOPY);
-				HBITMAP hBitmap;
 				hBitmap = (HBITMAP)SelectObject(memdc, membit);
 				Bitmap bitmap(hBitmap, NULL);
 
