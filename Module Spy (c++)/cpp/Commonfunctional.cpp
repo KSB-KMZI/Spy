@@ -45,7 +45,7 @@ void OutTextWithTime(char *filename, char *text, control *C, ofstream &out)
 
 		bool checkrun = false;
 
-		out << "Modules run: ";
+		out << "[Modules] Modules run: ";
 		
 		for (int i = 0; i < 6; i++)
 		{

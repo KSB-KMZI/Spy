@@ -28,7 +28,7 @@ void Help(int val)
 }
 void InitControl(control &C)
 {
-	C.stop = false;
+	C.stop = true;
 	C.period[0] = 7200; C.period[1] = 7200; C.period[2] = 7200; C.period[3] = 7200; C.period[4] = 7200; C.period[5] = 7200;
 	C.run[0] = true;
 	C.run[1] = true;
@@ -83,7 +83,7 @@ void PrintControl(control &C)
 	else
 		cout << "7. Screenshoter will work. Value: " << C.run_s << " Period: " << C.period_s << endl;
 
-	if (C.stop == true)
+	if (C.stop == false)
 		cout << "8. Spy.exe will be stopped. Value: " << C.stop << endl;
 	else
 		cout << "8. Spy.exe will work. Value: " << C.stop << endl;
@@ -147,9 +147,9 @@ string Set(control &C)
 	if (i == 8)
 	{
 		if (work == "on")
-			work_b = false;
-		if (work == "off")
 			work_b = true;
+		if (work == "off")
+			work_b = false;
 	}
 
 	if (i <= 5)
@@ -230,9 +230,9 @@ string Set_Create(control &C)
 			if (i == 8)
 			{
 				if (work == "on")
-					work_b = false;
-				if (work == "off")
 					work_b = true;
+				if (work == "off")
+					work_b = false;
 			}
 
 			if (i <= 5)
