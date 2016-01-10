@@ -12,6 +12,8 @@ void *ListenSocketProc(void *param)
 
 		Sleep(1);
 
+		CheckFolderExist();
+
 		fp = fopen(configuration, "r");
 		if (fp == NULL)
 			return NULL;

