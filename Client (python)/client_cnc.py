@@ -14,6 +14,14 @@ password = "q1w2e3r4"
 
 hard = 0
 
+def check_conn(ip):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    result = sock.connect_ex((ip,21))
+    if result == 0:
+        return 1
+    else:
+        return 0
+
 def download(filename):
     local_filename = filename
     lf = open(local_filename, 'wb')
@@ -230,14 +238,6 @@ def correct_config_file():
     rf.close()
     wf.close()
     return 1
-
-def check_conn(ip):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    result = sock.connect_ex((ip,21))
-    if result == 0:
-        return 1
-    else:
-        return 0
 
 ftps = FTP_TLS(ip)
 ftps.login(user_name, password)
